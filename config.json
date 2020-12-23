@@ -1,0 +1,5 @@
+{
+    "keyPath": "/path/to/private.key",
+    "applicationId": "<replace_with_your_application_id",
+    "redirectUrl": "<replace_with_your_redirect_url>"
+}
