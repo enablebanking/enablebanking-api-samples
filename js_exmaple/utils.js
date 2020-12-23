@@ -1,11 +1,6 @@
 const fs = require("fs");
 const jwa = require("jwa");
-const path = require("path");
 const readline = require('readline');
-
-const config = JSON.parse(fs.readFileSync(path.join(__dirname, "..", "config.json")))
-const KEY_PATH = config.keyPath;
-const APPLICATION_ID = config.applicationId;
 
 
 const base64AddPadding = (str) => {
@@ -16,11 +11,11 @@ const urlunsafeSignature = (signature) => {
   return signature.replace(/\_/g, "/").replace(/\-/g, "+");
 }
 
-const getJWTHeader = () => {
+const getJWTHeader = (applicationId) => {
   return encodeData({
     typ: "JWT",
     alg: "RS256",
-    kid: APPLICATION_ID
+    kid: applicationId
   })
 }
 
@@ -38,16 +33,16 @@ const getJWTBody = (exp) => {
   })
 }
 
-const signWithKey = (data) => {
-  const key = fs.readFileSync(KEY_PATH, "utf8");
+const signWithKey = (data, keyPath) => {
+  const key = fs.readFileSync(keyPath, "utf8");
   const hmac = jwa("RS256");
   return hmac.sign(data, key);
 }
 
-const getJWT = (exp = 3600) => {
-  const jwtHeaders = getJWTHeader()
+const getJWT = (applicationId, keyPath, exp = 3600) => {
+  const jwtHeaders = getJWTHeader(applicationId)
   const jwtBody = getJWTBody(exp);
-  const jwtSignature = signWithKey(`${jwtHeaders}.${jwtBody}`)
+  const jwtSignature = signWithKey(`${jwtHeaders}.${jwtBody}`, keyPath)
   return `${jwtHeaders}.${jwtBody}.${jwtSignature}`
 }
 
@@ -75,7 +70,6 @@ function getCode(url) {
 
 module.exports = {
   getJWT: getJWT,
-  config: config,
   input: input,
   getCode: getCode
 }

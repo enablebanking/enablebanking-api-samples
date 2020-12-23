@@ -1,12 +1,16 @@
 'use strict';
 
-const { create } = require('domain');
+const fs = require("fs");
 const fetch = require('node-fetch');
-const {getJWT, config, input, getCode} = require("./utils")
+const {getJWT, input, getCode} = require("./utils")
+const path = require("path");
 
 
 const main = async function() {
-  const JWT = getJWT()
+  const config = JSON.parse(fs.readFileSync(path.join(__dirname, "..", "config.json")))
+  const KEY_PATH = config.keyPath;
+  const APPLICATION_ID = config.applicationId;
+  const JWT = getJWT(APPLICATION_ID, KEY_PATH)
   const BASE_URL = "https://api.tilisy.com"
   const REDIRECT_URL = config.redirectUrl
   const BANK_NAME = "Nordea"

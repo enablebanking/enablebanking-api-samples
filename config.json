@@ -1,5 +1,5 @@
 {
-    "keyPath": "/Users/pavel/projects/misc/private.key",
-    "applicationId": "2a509cef-f7c9-4bf7-9846-6b59928fca8f",
-    "redirectUrl": "https://enablebanking.com/auth_redirect"
+    "keyPath": "/path/to/private.key",
+    "applicationId": "<applicationId here>",
+    "redirectUrl": "https://example.com/redirect_url"
 }

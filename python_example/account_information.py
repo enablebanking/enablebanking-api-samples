@@ -1,14 +1,23 @@
+import os
+import json
 from datetime import datetime, timezone, timedelta
 from urllib.parse import urlparse, parse_qs
 import uuid
 
 import requests
 
-from utils import get_jwt, config
+from utils import get_jwt
+
+
+file_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'config.json')
+with open(file_path, 'r') as f:
+    config = json.load(f)
+KEY_PATH = config["keyPath"]
+APPLICATION_ID = config["applicationId"]
 
 
 if __name__ == "__main__":
-    JWT = get_jwt()
+    JWT = get_jwt(APPLICATION_ID, KEY_PATH)
     BASE_URL = "https://api.tilisy.com"
     REDIRECT_URL = config["redirectUrl"]
     # we are going to use that bank for reference

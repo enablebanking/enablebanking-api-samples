@@ -1,4 +1,3 @@
-import os
 import base64
 import datetime
 import json
@@ -8,12 +7,6 @@ from cryptography.hazmat.backends import default_backend
 from cryptography.hazmat.primitives import hashes
 from cryptography.hazmat.primitives.asymmetric import padding
 
-
-file_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'config.json')
-with open(file_path, 'r') as f:
-    config = json.load(f)
-KEY_PATH = config["keyPath"]
-APPLICATION_ID = config["applicationId"]
 
 
 def _prepare_private_key(key_path: str):
@@ -29,8 +22,8 @@ def _encode_data(data: Dict[Any, Any]) -> str:
     )
 
 
-def get_jwt_header() -> str:
-    header_data = {"typ": "JWT", "alg": "RS256", "kid": APPLICATION_ID}
+def get_jwt_header(application_id: str) -> str:
+    header_data = {"typ": "JWT", "alg": "RS256", "kid": application_id}
     return _encode_data(header_data)
 
 
@@ -45,15 +38,15 @@ def get_jwt_body(exp) -> str:
     return _encode_data(body_data)
 
 
-def sign_with_key(data: str) -> str:
+def sign_with_key(data: str, key_path: str) -> str:
     encoded_data = data.encode()
-    key = _prepare_private_key(KEY_PATH)
+    key = _prepare_private_key(key_path)
     signature = key.sign(encoded_data, padding.PKCS1v15(), hashes.SHA256())
     return base64.urlsafe_b64encode(signature).decode("utf8").replace("=", "")
 
 
-def get_jwt(exp: int = 3600):
-    jwt_header = get_jwt_header()
+def get_jwt(application_id: str, key_path: str, exp: int = 3600):
+    jwt_header = get_jwt_header(application_id)
     jwt_body = get_jwt_body(exp=exp)
-    jwt_signature = sign_with_key(f"{jwt_header}.{jwt_body}")
+    jwt_signature = sign_with_key(f"{jwt_header}.{jwt_body}", key_path)
     return f"{jwt_header}.{jwt_body}.{jwt_signature}"
