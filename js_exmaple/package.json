@@ -1,0 +1,17 @@
+{
+  "name": "js_exmaple",
+  "version": "1.0.0",
+  "main": "accountInformation.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Pavel Botsman",
+  "license": "ISC",
+  "engines": {
+    "node": ">=14"
+  },
+  "dependencies": {
+    "jwa": "^2.0.0",
+    "node-fetch": "^2.6.1"
+  }
+}

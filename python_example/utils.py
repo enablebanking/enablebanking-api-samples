@@ -45,7 +45,7 @@ def get_jwt_body(exp) -> str:
     return _encode_data(body_data)
 
 
-def signWithKey(data: str) -> str:
+def sign_with_key(data: str) -> str:
     encoded_data = data.encode()
     key = _prepare_private_key(KEY_PATH)
     signature = key.sign(encoded_data, padding.PKCS1v15(), hashes.SHA256())
@@ -55,5 +55,5 @@ def signWithKey(data: str) -> str:
 def get_jwt(exp: int = 3600):
     jwt_header = get_jwt_header()
     jwt_body = get_jwt_body(exp=exp)
-    jwt_signature = signWithKey(f"{jwt_header}.{jwt_body}")
+    jwt_signature = sign_with_key(f"{jwt_header}.{jwt_body}")
     return f"{jwt_header}.{jwt_body}.{jwt_signature}"

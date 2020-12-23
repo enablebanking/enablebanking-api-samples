@@ -1,4 +1,5 @@
 *.key
-/node_modules
+*/node_modules
 .python-version
 *.pyc
+package-lock.json

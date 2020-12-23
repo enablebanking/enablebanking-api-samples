@@ -70,4 +70,4 @@ if __name__ == "__main__":
     account_transactions_response = requests.get(
         f"{BASE_URL}/accounts/{account_id}/transactions", headers=psu_headers
     )
-    print(f"Account balances data: {account_transactions_response.json()}")
+    print(f"Account transactions data: {account_transactions_response.json()}")
