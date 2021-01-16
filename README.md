@@ -10,6 +10,8 @@ In order to be able to use these samples you need to:
 
 2. Register your application at https://enablebanking.com/cp/applications
 
-3. Modify `keyPath` and `applicationId` variables in the `config.json` file in the root of this project with the values obtained from previous step.
+3. Modify `keyPath` and `applicationId` variables in the `config.json` file in the root of this
+project with the values obtained from previous step.
 
-For further information please refer to [Tilisy API documentation](https://enablebanking.com/docs/tilisy/latest/)  
+For further information please refer to
+[Tilisy API documentation](https://enablebanking.com/docs/tilisy/latest/)  
