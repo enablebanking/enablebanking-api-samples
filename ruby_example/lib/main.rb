@@ -94,17 +94,33 @@ def main
   end
 
   # Retrieving account transactions (since yesterday)
-  r = Faraday.get(
-    "https://api.tilisy.com/accounts/#{account_uid}/transactions",
-    { date_from: Date.today.prev_day.iso8601 },
-    "Authorization" => "Bearer #{jwt}"
-  )
-  if r.status == 200
-    transactions = JSON.parse(r.body)["transactions"]
-    puts "Transactions:"
-    puts transactions
-  else
-    puts "Error response #{r.status}:", r.body
+  continuation_key = nil
+  loop do
+    query = { date_from: Date.today.prev_day.iso8601 }
+    if continuation_key
+      query["continuation_key"] = continuation_key
+    end
+    r = Faraday.get(
+      "https://api.tilisy.com/accounts/#{account_uid}/transactions",
+      query,
+      "Authorization" => "Bearer #{jwt}"
+    )
+    if r.status == 200
+      resp_data = JSON.parse(r.body)
+      transactions = resp_data["transactions"]
+      puts "Transactions:"
+      puts transactions
+      if resp_data.has_key?("continuation_key") and resp_data["continuation_key"]
+        continuation_key = resp_data["continuation_key"]
+        puts "Going to fetch more transaction with continuation key #{continuation_key}"
+      else
+        puts "No continuation key. All transactions were fetched"
+        break
+      end
+    else
+      puts "Error response #{r.status}:", r.body
+      break
+    end
   end
 end
 
