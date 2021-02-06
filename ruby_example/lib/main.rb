@@ -29,6 +29,7 @@ def main
     puts pp(app)
   else
     puts "Error response #{r.status}:", r.body
+    return
   end
 
   # Requesting available ASPSPs
@@ -39,6 +40,7 @@ def main
     puts pp(aspsps)
   else
     puts "Error response #{r.status}:", r.body
+    return
   end
 
   # Starting authorization"
@@ -59,6 +61,7 @@ def main
     puts "To authenticate open URL #{auth_url}"
   else
     puts "Error response #{r.status}:", r.body
+    return
   end
 
   # Reading auth code and creating user session
@@ -76,6 +79,12 @@ def main
     puts pp(session)
   else
     puts "Error response #{r.status}:", r.body
+    return
+  end
+
+  if session["accounts"].length() == 0
+    puts "No accounts available"
+    return
   end
 
   # Retrieving account balances
@@ -91,6 +100,7 @@ def main
     puts balances
   else
     puts "Error response #{r.status}:", r.body
+    return
   end
 
   # Retrieving account transactions (since yesterday)
@@ -119,9 +129,10 @@ def main
       end
     else
       puts "Error response #{r.status}:", r.body
-      break
+      return
     end
   end
+  puts "All done!"
 end
 
 if __FILE__ == $PROGRAM_NAME
