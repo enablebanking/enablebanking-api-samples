@@ -1,73 +1,141 @@
-from datetime import datetime, timezone, timedelta
-from urllib.parse import urlparse, parse_qs
+import json
+import os
+import sys
 import uuid
+from datetime import datetime, timezone, timedelta
+from pprint import pprint
+from urllib.parse import urlparse, parse_qs
 
 import requests
+import jwt as pyjwt
 
-from utils import get_jwt, config
+
+API_ORIGIN = "https://api.tilisy.com"
+ASPSP_NAME = "Nordea"
+ASPSP_COUNTRY = "FI"
 
 
-if __name__ == "__main__":
-    JWT = get_jwt()
-    BASE_URL = "https://api.tilisy.com"
-    REDIRECT_URL = config["redirectUrl"]
-    # we are going to use that bank for reference
-    BANK_NAME = "Nordea"
-    BANK_COUNTRY = "FI"
-    base_headers = {"Authorization": f"Bearer {JWT}"}
-    application_response = requests.get(f"{BASE_URL}/application", headers=base_headers)
-    print(f"Application data: {application_response.json()}")
+def main():
+    file_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "config.json")
+    with open(file_path, "r") as f:
+        config = json.load(f)
+    iat = int(datetime.now().timestamp())
+    jwt_body = {
+        "iss": "enablebanking.com",
+        "aud": "api.tilisy.com",
+        "iat": iat,
+        "exp": iat + 3600,
+    }
+    jwt = pyjwt.encode(
+        jwt_body,
+        open(os.path.join('..', config["keyPath"]), "rb").read(),
+        algorithm="RS256",
+        headers={"kid": config["applicationId"]},
+    )
+    print(jwt)
 
-    aspsps_response = requests.get(f"{BASE_URL}/aspsps", headers=base_headers)
-    # If you want, you can override BANK_NAME and BANK_COUNTRY with any bank from this list
-    print(f"ASPSPS data: {aspsps_response.json()}")
+    base_headers = {"Authorization": f"Bearer {jwt}"}
 
-    start_authorization_body = {
+    # Requesting application details
+    r = requests.get(f"{API_ORIGIN}/application", headers=base_headers)
+    if r.status_code == 200:
+        app = r.json()
+        print("Application details:")
+        pprint(app)
+    else:
+        print(f"Error response {r.status_code}:", r.text)
+        return
+
+    # Requesting available ASPSPs
+    r = requests.get(f"{API_ORIGIN}/aspsps", headers=base_headers)
+    if r.status_code == 200:
+        print("Available ASPSPs:")
+        pprint(r.json()["aspsps"])
+    else:
+        print(f"Error response {r.status_code}:", r.text)
+        return
+
+    # Starting authorization"
+    body = {
         "access": {
             "valid_until": (datetime.now(timezone.utc) + timedelta(days=10)).isoformat()
         },
-        "aspsp": {"name": BANK_NAME, "country": BANK_COUNTRY},
+        "aspsp": {"name": ASPSP_NAME, "country": ASPSP_COUNTRY},
         "state": str(uuid.uuid4()),
-        "redirect_url": REDIRECT_URL,
+        "redirect_url": app["redirect_urls"][0],
         "psu_type": "personal",
     }
-    psu_headers = base_headers.copy()
-    psu_headers["psu-ip-address"] = "10.10.10.10"
-    psu_headers["psu-user-agent"] = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:80.0) Gecko/20100101 Firefox/80.0"
-    start_authorization_response = requests.post(
-        f"{BASE_URL}/auth", json=start_authorization_body, headers=psu_headers
-    )
-    start_authorization_data = start_authorization_response.json()
-    print(f"Start authorization data: {start_authorization_data}")
+    r = requests.post(f"{API_ORIGIN}/auth", json=body, headers=base_headers)
+    if r.status_code == 200:
+        auth_url = r.json()["url"]
+        print(f"To authenticate open URL {auth_url}")
+    else:
+        print(f"Error response {r.status_code}:", r.text)
+        return
 
-    redirected_url = input(
-        f"Please go to {start_authorization_data['url']}, authorize consent and"
-        "paste here the url you have been redirected to: "
-    )
-    code = parse_qs(urlparse(redirected_url).query)["code"][0]
-    create_session_body = {"code": code}
+    # Reading auth code and creating user session
+    redirected_url = input("Paste here the URL you have been redirected to: ")
+    auth_code = parse_qs(urlparse(redirected_url).query)["code"][0]
+    r = requests.post(f"{API_ORIGIN}/sessions", json={"code": auth_code}, headers=base_headers)
+    if r.status_code == 200:
+        session = r.json()
+        print("New user session has been created:")
+        pprint(session)
+    else:
+        print(f"Error response {r.status_code}:", r.text)
+        return
 
-    create_session_response = requests.post(
-        f"{BASE_URL}/sessions", json=create_session_body, headers=psu_headers
-    )
-    create_session_data = create_session_response.json()
-    print(f"Create session data: {create_session_data}")
+    # Fetching session details again
+    session_id = session["session_id"]
+    r = requests.get(f"{API_ORIGIN}/sessions/{session_id}", headers=base_headers)
+    if r.status_code == 200:
+        print("Stored session data:")
+        pprint(r.json())
+    else:
+        print(f"Error response {r.status_code}:", r.text)
+        return
 
-    session_id = create_session_data["session_id"]
+    # Using the first available account for the following API calls
+    account_uid = session["accounts"][0]["uid"]
 
-    session_response = requests.get(
-        f"{BASE_URL}/sessions/{session_id}", headers=base_headers
-    )
-    session_data = session_response.json()
-    print(f"Session data: {session_data}")
+    # Retrieving account balances
+    r = requests.get(f"{API_ORIGIN}/accounts/{account_uid}/balances", headers=base_headers)
+    if r.status_code == 200:
+        print("Balances:")
+        pprint(r.json())
+    else:
+        print(f"Error response {r.status_code}:", r.text)
+        return
 
-    account_id = session_data["accounts"][0]
-    account_balances_response = requests.get(
-        f"{BASE_URL}/accounts/{account_id}/balances", headers=psu_headers
-    )
-    print(f"Account balances data: {account_balances_response.json()}")
+    # Retrieving account transactions (since 10 days ago)
+    continuation_key = None
+    while True:
+        query = {
+            "date_from": (datetime.now(timezone.utc) - timedelta(days=10)).date().isoformat(),
+        }
+        if continuation_key:
+            query["continuation_key"] = continuation_key
+        r = requests.get(
+            f"{API_ORIGIN}/accounts/{account_uid}/transactions",
+            params=query,
+            headers=base_headers,
+        )
+        if r.status_code == 200:
+            resp_data = r.json()
+            print("Transactions:")
+            pprint(resp_data["transactions"])
+            continuation_key = resp_data.get("continuation_key")
+            if continuation_key:
+                print(f"Going to fetch more transactions with continuation key {continuation_key}")
+            else:
+                print("No continuation key. All transactions were fetched")
+                break
+        else:
+            print(f"Error response {r.status_code}:", r.text)
+            return
 
-    account_transactions_response = requests.get(
-        f"{BASE_URL}/accounts/{account_id}/transactions", headers=psu_headers
-    )
-    print(f"Account transactions data: {account_transactions_response.json()}")
+    print("All done!")
+
+
+if __name__ == "__main__":
+    main()
