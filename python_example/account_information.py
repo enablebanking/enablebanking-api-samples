@@ -107,12 +107,12 @@ def main():
         print(f"Error response {r.status_code}:", r.text)
         return
 
-    # Retrieving account transactions (since 10 days ago)
+    # Retrieving account transactions (since 90 days ago)
+    query = {
+        "date_from": (datetime.now(timezone.utc) - timedelta(days=90)).date().isoformat(),
+    }
     continuation_key = None
     while True:
-        query = {
-            "date_from": (datetime.now(timezone.utc) - timedelta(days=10)).date().isoformat(),
-        }
         if continuation_key:
             query["continuation_key"] = continuation_key
         r = requests.get(
@@ -125,11 +125,10 @@ def main():
             print("Transactions:")
             pprint(resp_data["transactions"])
             continuation_key = resp_data.get("continuation_key")
-            if continuation_key:
-                print(f"Going to fetch more transactions with continuation key {continuation_key}")
-            else:
+            if not continuation_key:
                 print("No continuation key. All transactions were fetched")
                 break
+            print(f"Going to fetch more transactions with continuation key {continuation_key}")
         else:
             print(f"Error response {r.status_code}:", r.text)
             return
