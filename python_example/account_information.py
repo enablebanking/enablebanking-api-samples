@@ -55,7 +55,7 @@ def main():
         print(f"Error response {r.status_code}:", r.text)
         return
 
-    # Starting authorization"
+    # Starting authorization
     body = {
         "access": {
             "valid_until": (datetime.now(timezone.utc) + timedelta(days=10)).isoformat()
