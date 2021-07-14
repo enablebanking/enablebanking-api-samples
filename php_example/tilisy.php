@@ -54,7 +54,7 @@ if($r['status'] === 200)
     echo 'Application details:';
     print_r($app);
 } else {
-    echo 'Error response #' . $r['status'] . ':' . $r['body'];
+    exit('Error response #' . $r['status'] . ':' . $r['body']);
 }
 
 // Requesting available ASPSPs
@@ -65,16 +65,17 @@ if($r['status'] === 200)
     echo 'Available ASPSPs:';
     print_r($aspsps);
 } else {
-    echo 'Error response #' . $r['status'] . ':' . $r['body'];
+    exit('Error response #' . $r['status'] . ':' . $r['body']);
 }
 
 // Starting authorization
 $valid_until = time() + 2 * 7 * 24 * 60 * 60;
 $body = [
-    'access' => [ 'valid_until' => $valid_until ],
+    'access' => [ 'valid_until' => date('c', $valid_until) ],
     'aspsp' => [ 'name' => 'Danske Bank', 'country' => 'FI' ], // { name: aspsps[0]['name'], country: aspsps[0]['country'] },
     'state' => 'random',
-    'redirect_url' => $app->redirect_urls[0]
+    'redirect_url' => $app->redirect_urls[0],
+    'psu_type' => 'personal'
 ];
 
 $r = request('https://api.tilisy.com/auth', $headers, json_encode($body));
@@ -83,7 +84,7 @@ if($r['status'] == 200)
     $auth_url = json_decode($r['body'])->url;
     echo 'To authenticate open URL ' . $auth_url . PHP_EOL;
 } else {
-    echo 'Error response #' . $r['status'] . ':' . $r['body'];
+    exit('Error response #' . $r['status'] . ':' . $r['body']);
 }
 
 // Reading auth code and creating user session
@@ -97,7 +98,7 @@ if($r['status'] === 200)
     echo 'New user session has been created:';
     print_r($session); 
 } else {
-    echo 'Error response #' . $r['status'] . ':' . $r['body'];
+    exit('Error response #' . $r['status'] . ':' . $r['body']);
 }
 $account_uid = $session->accounts[0]->uid;
 
@@ -109,7 +110,7 @@ if($r['status'] === 200)
     echo 'Balances: ';
     print_r($balances);
 } else {
-    echo 'Error response #' . $r['status'] . ':' . $r['body'];
+    exit('Error response #' . $r['status'] . ':' . $r['body']);
 }
 
 // Retrieving account transactions (since yesterday)
@@ -137,8 +138,7 @@ do
             break;
         }
     } else {
-        echo 'Error response #' . $r['status'] . ':' . $r['body'];
-        break;
+        exit('Error response #' . $r['status'] . ':' . $r['body']);
     }
 }
 while(true);
