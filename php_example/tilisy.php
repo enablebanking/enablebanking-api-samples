@@ -29,7 +29,7 @@ $config = json_decode($config_file);
 
 // Loading RSA private key
 $key_path = $config->keyPath;
-$rsa_key = file_get_contents($key_path);
+$rsa_key = file_get_contents(dirname(__FILE__) . '/../' . $key_path);
 
 // Creating JWT
 $jwt_header = [ 'typ' => 'JWT', 'alg' => 'RS256', 'kid' => $config->applicationId ];
@@ -72,7 +72,7 @@ if($r['status'] === 200)
 $valid_until = time() + 2 * 7 * 24 * 60 * 60;
 $body = [
     'access' => [ 'valid_until' => $valid_until ],
-    'aspsp' => [ 'name' => 'Nordea', 'country' => 'FI' ], // { name: aspsps[0]['name'], country: aspsps[0]['country'] },
+    'aspsp' => [ 'name' => 'Danske Bank', 'country' => 'FI' ], // { name: aspsps[0]['name'], country: aspsps[0]['country'] },
     'state' => 'random',
     'redirect_url' => $app->redirect_urls[0]
 ];
