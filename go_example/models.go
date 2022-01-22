@@ -1,5 +1,11 @@
 package main
 
+type Config struct {
+	KeyPath string `json:"keyPath"`
+	ApplicationId string `json:"applicationId"`
+	RedirectUrl string `json:"redirectUrl"`
+}
+
 type Access struct {
 	ValidUntil string `json:"valid_until"`
 }

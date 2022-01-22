@@ -11,14 +11,19 @@ import (
 	"time"
 )
 
-const keyPath = "/path/to/key.pem"
-const appId = "your-app-id"
+const configPath = "../config.json"
 const APIOrigin = "https://api.tilisy.com"
 const ASPSPName = "Nordea"
 const ASPSPCountry = "FI"
 
 func main() {
-	jwt, err := getJwt(keyPath, appId)
+	config := Config{}
+	configFile, err := ioutil.ReadFile(configPath)
+	err = json.Unmarshal(configFile, &config)
+	if err != nil {
+		panic(err)
+	}
+	jwt, err := getJwt(config.KeyPath, config.AppId)
 	if err != nil {
 		panic(err)
 	}
@@ -70,7 +75,7 @@ func main() {
 			Country: ASPSPCountry,
 		},
 		State:       uuid.NewString(),
-		RedirectUrl: "https://enablebanking.com/auth_redirect",
+		RedirectUrl: config.RedirectUrl,
 		PsuType:     "personal",
 	}
 	jsonRequestBody, err := json.Marshal(startAuthRequestBody)
