@@ -23,7 +23,7 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
-	jwt, err := getJwt(config.KeyPath, config.AppId)
+	jwt, err := getJwt(config.KeyPath, config.ApplicationId)
 	if err != nil {
 		panic(err)
 	}
