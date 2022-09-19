@@ -2,7 +2,7 @@
 	"info": {
 		"_postman_id": "d8fb687d-7b9f-4155-a58e-a6b1c7197f8a",
 		"name": "Enable Banking",
-		"description": "This is collection of sample requests to Tilisy.com.\nEach request needs JWT token, which generates in Pre-request Script. For using this, add your RSA private key to collection Variables (variable name - 'private_key').\nIf you have a key in .pem format, run:\n```openssl rsa -in private.pem -out private.key```",
+		"description": "This is collection of sample requests to api.tilisy.com.\nEach request needs JWT token, which generates in Pre-request Script. For using this, add your RSA private key to collection Variables (variable name - 'private_key').\nGo to https://enablebanking.com/cp/applications and register your application.",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
