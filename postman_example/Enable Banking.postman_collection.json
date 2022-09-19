@@ -1,0 +1,282 @@
+{
+	"info": {
+		"_postman_id": "d8fb687d-7b9f-4155-a58e-a6b1c7197f8a",
+		"name": "Enable Banking",
+		"description": "This is collection of sample requests to api.tilisy.com.\nEach request needs JWT token, which generates in Pre-request Script. For using this, add your RSA private key to collection Variables (variable name - 'private_key').\nGo to https://enablebanking.com/cp/applications and register your application.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Requesting available ASPSPs",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{jwt_signed}}",
+						"type": "default"
+					}
+				],
+				"url": {
+					"raw": "https://api.tilisy.com/aspsps",
+					"protocol": "https",
+					"host": [
+						"api",
+						"tilisy",
+						"com"
+					],
+					"path": [
+						"aspsps"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Requesting application details",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{jwt_signed}}",
+						"type": "default"
+					}
+				],
+				"url": {
+					"raw": "https://api.tilisy.com/application",
+					"protocol": "https",
+					"host": [
+						"api",
+						"tilisy",
+						"com"
+					],
+					"path": [
+						"application"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Starting authorization",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{jwt_signed}}",
+						"type": "default"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"access\": {\n        \"valid_until\": \"2022-10-10T16:02:08.070557+00:00\"\n    },\n    \"aspsp\": {\n        \"name\": \"Nordea\",\n        \"country\": \"FI\"\n    },\n    \"state\": \"7226b0c8-e5bf-463c-acdc-a562e18224d1\",\n    \"redirect_url\": \"https://www.google.com/\",\n    \"psu_type\": \"personal\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://api.tilisy.com/auth",
+					"protocol": "https",
+					"host": [
+						"api",
+						"tilisy",
+						"com"
+					],
+					"path": [
+						"auth"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Reading auth code and creating user session",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{jwt_signed}}",
+						"type": "default"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"code\": \"42519c92-85ef-4970-8615-daa56f809a9d\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://api.tilisy.com/sessions",
+					"protocol": "https",
+					"host": [
+						"api",
+						"tilisy",
+						"com"
+					],
+					"path": [
+						"sessions"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Fetching session details",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{jwt_signed}}",
+						"type": "default"
+					}
+				],
+				"url": {
+					"raw": "https://api.tilisy.com/sessions/a94c6f56-45d6-42fb-82bb-9dc079872fe8",
+					"protocol": "https",
+					"host": [
+						"api",
+						"tilisy",
+						"com"
+					],
+					"path": [
+						"sessions",
+						"a94c6f56-45d6-42fb-82bb-9dc079872fe8"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Retrieving account balances",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{jwt_signed}}",
+						"type": "default"
+					}
+				],
+				"url": {
+					"raw": "https://api.tilisy.com/accounts/14964e48-5a7d-4393-ad55-7636704233d1/balances",
+					"protocol": "https",
+					"host": [
+						"api",
+						"tilisy",
+						"com"
+					],
+					"path": [
+						"accounts",
+						"14964e48-5a7d-4393-ad55-7636704233d1",
+						"balances"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Retrieving account transactions (since 90 days ago)",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{jwt_signed}}",
+						"type": "default"
+					}
+				],
+				"url": {
+					"raw": "https://api.tilisy.com/accounts/14964e48-5a7d-4393-ad55-7636704233d1/transactions",
+					"protocol": "https",
+					"host": [
+						"api",
+						"tilisy",
+						"com"
+					],
+					"path": [
+						"accounts",
+						"14964e48-5a7d-4393-ad55-7636704233d1",
+						"transactions"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					"// Before using collection, set your RSA private key to collection variables",
+					"var privateKey = pm.collectionVariables.get(\"private_key\") || '';",
+					"",
+					"// Set headers for JWT",
+					"var header = {",
+					"\t'typ': 'JWT',",
+					"\t'alg': 'RS256',",
+					"    'kid': '6d4c585e-dccd-4a2e-8cac-1bd04997844b'",
+					"};",
+					"",
+					"// Prepare timestamp in seconds",
+					"var currentTimestamp = Math.floor(Date.now() / 1000)",
+					"",
+					"var data = {",
+					"\t'iss': 'enablebanking.com',",
+					"\t'aud': 'api.tilisy.com',",
+					"\t'iat': currentTimestamp,",
+					"\t'exp': currentTimestamp + 300 // expiry time is 300 seconds from time of creation",
+					"}",
+					"",
+					"function generateJwt() {",
+					"\teval(pm.globals.get('jsrsasign-js')); // import javascript jsrsasign",
+					"",
+					"\tvar signedToken = KJUR.jws.JWS.sign(header.alg, JSON.stringify(header), JSON.stringify(data), privateKey);",
+					"",
+					"\tpm.collectionVariables.set('jwt_signed', signedToken);",
+					"}",
+					"",
+					"var navigator = {}; // fake a navigator object for the lib",
+					"var window = {}; // fake a window object for the lib",
+					"",
+					"if (pm.globals.has('jsrsasign-js')) generateJwt();",
+					"else pm.sendRequest(",
+					"\t'https://kjur.github.io/jsrsasign/jsrsasign-all-min.js',",
+					"\tfunction (err, res) {",
+					"\t\tif (err) {",
+					"\t\t\tconsole.log(err);",
+					"\t\t} else {",
+					"\t\t\tpm.globals.set('jsrsasign-js', res.text());",
+					"\t\t\tgenerateJwt();",
+					"\t\t}});"
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "private_key",
+			"value": "",
+			"type": "default"
+		}
+	]
+}
