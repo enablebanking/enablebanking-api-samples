@@ -2,7 +2,7 @@
 	"info": {
 		"_postman_id": "d8fb687d-7b9f-4155-a58e-a6b1c7197f8a",
 		"name": "Enable Banking",
-		"description": "This is collection of sample requests to api.tilisy.com.\nEach request needs JWT token, which generates in Pre-request Script. For using this, add your RSA private key to collection Variables (variable name - 'private_key').\nGo to https://enablebanking.com/cp/applications and register your application.",
+		"description": "This is collection of sample requests to api.tilisy.com.\nEach request needs JWT token, which generates in Pre-request Script. For using this, add your RSA private key (variable name - 'private_key') and kid (variable name - 'kid') to collection Variables.\nGo to https://enablebanking.com/cp/applications and register your application.",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
@@ -225,7 +225,7 @@
 					"var header = {",
 					"\t'typ': 'JWT',",
 					"\t'alg': 'RS256',",
-					"    'kid': '6d4c585e-dccd-4a2e-8cac-1bd04997844b'",
+					"\t'kid': pm.collectionVariables.get(\"kid\") || ''",
 					"};",
 					"",
 					"// Prepare timestamp in seconds",
@@ -275,6 +275,11 @@
 	"variable": [
 		{
 			"key": "private_key",
+			"value": "",
+			"type": "default"
+		},
+		{
+			"key": "kid",
 			"value": "",
 			"type": "default"
 		}
