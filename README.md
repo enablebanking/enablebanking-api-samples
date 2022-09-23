@@ -1,6 +1,6 @@
-# Tilisy API samples
+# Enable Banking API samples
 
-Code samples for using https://api.tilisy.com
+Code samples for using https://enablebanking.com/tilisy-api/
 
 ## Prerequisites   
 
@@ -13,5 +13,4 @@ In order to be able to use these samples you need to:
 3. Modify `keyPath` and `applicationId` variables in the `config.json` file in the root of this
 project with the values obtained from previous step.
 
-For further information please refer to
-[Tilisy API documentation](https://enablebanking.com/docs/tilisy/latest/)  
+For further information please refer to the [API documentation](https://enablebanking.com/docs/tilisy/latest/)  
