@@ -19,8 +19,8 @@ namespace cs_example
     class Program
     {
         private static readonly HttpClient client = new HttpClient();
-        private static readonly string apiOrigin = "https://api.tilisy.com";
-        private static readonly string jwtAudience = "api.tilisy.com";
+        private static readonly string apiOrigin = "https://api.enablebanking.com";
+        private static readonly string jwtAudience = "api.enablebanking.com";
         private static readonly string jwtIssuer = "enablebanking.com";
 
         private static string authRedirectUrl = null;
