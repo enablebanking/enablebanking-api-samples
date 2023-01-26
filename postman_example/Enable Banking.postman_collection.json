@@ -2,7 +2,7 @@
 	"info": {
 		"_postman_id": "d8fb687d-7b9f-4155-a58e-a6b1c7197f8a",
 		"name": "Enable Banking",
-		"description": "This is collection of sample requests to api.tilisy.com.\nEach request needs JWT token, which generates in Pre-request Script. For using this, add your RSA private key (variable name - 'private_key') and kid (variable name - 'kid') to collection Variables.\nGo to https://enablebanking.com/cp/applications and register your application.",
+		"description": "This is collection of sample requests to api.enablebanking.com.\nEach request needs JWT token, which generates in Pre-request Script. For using this, add your RSA private key (variable name - 'private_key') and kid (variable name - 'kid') to collection Variables.\nGo to https://enablebanking.com/cp/applications and register your application.",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
@@ -18,11 +18,11 @@
 					}
 				],
 				"url": {
-					"raw": "https://api.tilisy.com/aspsps",
+					"raw": "https://api.enablebanking.com/aspsps",
 					"protocol": "https",
 					"host": [
 						"api",
-						"tilisy",
+						"enablebanking",
 						"com"
 					],
 					"path": [
@@ -44,11 +44,11 @@
 					}
 				],
 				"url": {
-					"raw": "https://api.tilisy.com/application",
+					"raw": "https://api.enablebanking.com/application",
 					"protocol": "https",
 					"host": [
 						"api",
-						"tilisy",
+						"enablebanking",
 						"com"
 					],
 					"path": [
@@ -79,11 +79,11 @@
 					}
 				},
 				"url": {
-					"raw": "https://api.tilisy.com/auth",
+					"raw": "https://api.enablebanking.com/auth",
 					"protocol": "https",
 					"host": [
 						"api",
-						"tilisy",
+						"enablebanking",
 						"com"
 					],
 					"path": [
@@ -114,11 +114,11 @@
 					}
 				},
 				"url": {
-					"raw": "https://api.tilisy.com/sessions",
+					"raw": "https://api.enablebanking.com/sessions",
 					"protocol": "https",
 					"host": [
 						"api",
-						"tilisy",
+						"enablebanking",
 						"com"
 					],
 					"path": [
@@ -140,11 +140,11 @@
 					}
 				],
 				"url": {
-					"raw": "https://api.tilisy.com/sessions/a94c6f56-45d6-42fb-82bb-9dc079872fe8",
+					"raw": "https://api.enablebanking.com/sessions/a94c6f56-45d6-42fb-82bb-9dc079872fe8",
 					"protocol": "https",
 					"host": [
 						"api",
-						"tilisy",
+						"enablebanking",
 						"com"
 					],
 					"path": [
@@ -167,11 +167,11 @@
 					}
 				],
 				"url": {
-					"raw": "https://api.tilisy.com/accounts/14964e48-5a7d-4393-ad55-7636704233d1/balances",
+					"raw": "https://api.enablebanking.com/accounts/14964e48-5a7d-4393-ad55-7636704233d1/balances",
 					"protocol": "https",
 					"host": [
 						"api",
-						"tilisy",
+						"enablebanking",
 						"com"
 					],
 					"path": [
@@ -195,11 +195,11 @@
 					}
 				],
 				"url": {
-					"raw": "https://api.tilisy.com/accounts/14964e48-5a7d-4393-ad55-7636704233d1/transactions",
+					"raw": "https://api.enablebanking.com/accounts/14964e48-5a7d-4393-ad55-7636704233d1/transactions",
 					"protocol": "https",
 					"host": [
 						"api",
-						"tilisy",
+						"enablebanking",
 						"com"
 					],
 					"path": [
@@ -233,7 +233,7 @@
 					"",
 					"var data = {",
 					"\t'iss': 'enablebanking.com',",
-					"\t'aud': 'api.tilisy.com',",
+					"\t'aud': 'api.enablebanking.com',",
 					"\t'iat': currentTimestamp,",
 					"\t'exp': currentTimestamp + 300 // expiry time is 300 seconds from time of creation",
 					"}",

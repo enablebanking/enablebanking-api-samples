@@ -18,11 +18,11 @@ def main
   # Creating JWT
   iat = Time.now.to_i
   jwt_header = { typ: "JWT", alg: "RS256", kid: config["applicationId"] }
-  jwt_body = { iss: "enablebanking.com", aud: "api.tilisy.com", iat: iat, exp: iat + 3600 } 
+  jwt_body = { iss: "enablebanking.com", aud: "api.enablebanking.com", iat: iat, exp: iat + 3600 }
   jwt = JWT.encode(jwt_body, rsa_key, 'RS256', jwt_header)
 
   # Requesting application details
-  r = Faraday.get("https://api.tilisy.com/application", nil, "Authorization" => "Bearer #{jwt}")
+  r = Faraday.get("https://api.enablebanking.com/application", nil, "Authorization" => "Bearer #{jwt}")
   if r.status == 200
     app = JSON.parse(r.body)
     puts "Application details:"
@@ -33,7 +33,7 @@ def main
   end
 
   # Requesting available ASPSPs
-  r = Faraday.get("https://api.tilisy.com/aspsps", nil, "Authorization" => "Bearer #{jwt}")
+  r = Faraday.get("https://api.enablebanking.com/aspsps", nil, "Authorization" => "Bearer #{jwt}")
   if r.status == 200
     aspsps = JSON.parse(r.body)["aspsps"]
     puts "Available ASPSPs:"
@@ -55,7 +55,7 @@ def main
     "Content-Type" => "application/json",
     "Authorization" => "Bearer #{jwt}"
   }
-  r = Faraday.post("https://api.tilisy.com/auth", JSON.dump(body), headers)
+  r = Faraday.post("https://api.enablebanking.com/auth", JSON.dump(body), headers)
   if r.status == 200
     auth_url = JSON.parse(r.body)["url"]
     puts "To authenticate open URL #{auth_url}"
@@ -72,7 +72,7 @@ def main
     break
   end
   body = { code: auth_code }
-  r = Faraday.post("https://api.tilisy.com/sessions", JSON.dump(body), headers)
+  r = Faraday.post("https://api.enablebanking.com/sessions", JSON.dump(body), headers)
   if r.status == 200
     session = JSON.parse(r.body)
     puts "New user session has been created:"
@@ -90,7 +90,7 @@ def main
   # Retrieving account balances
   account_uid = session["accounts"][0]["uid"]
   r = Faraday.get(
-    "https://api.tilisy.com/accounts/#{account_uid}/balances",
+    "https://api.enablebanking.com/accounts/#{account_uid}/balances",
     nil,
     "Authorization" => "Bearer #{jwt}"
   )
@@ -111,7 +111,7 @@ def main
       query["continuation_key"] = continuation_key
     end
     r = Faraday.get(
-      "https://api.tilisy.com/accounts/#{account_uid}/transactions",
+      "https://api.enablebanking.com/accounts/#{account_uid}/transactions",
       query,
       "Authorization" => "Bearer #{jwt}"
     )

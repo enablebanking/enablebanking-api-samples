@@ -10,7 +10,7 @@ import requests
 import jwt as pyjwt
 
 
-API_ORIGIN = "https://api.tilisy.com"
+API_ORIGIN = "https://api.enablebanking.com"
 ASPSP_NAME = "Nordea"
 ASPSP_COUNTRY = "FI"
 
@@ -22,7 +22,7 @@ def main():
     iat = int(datetime.now().timestamp())
     jwt_body = {
         "iss": "enablebanking.com",
-        "aud": "api.tilisy.com",
+        "aud": "api.enablebanking.com",
         "iat": iat,
         "exp": iat + 3600,
     }

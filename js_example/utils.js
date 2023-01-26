@@ -32,7 +32,7 @@ const getJWTBody = (exp) => {
   const timestamp = Math.floor((new Date()).getTime() / 1000)
   return encodeData({
     iss: "enablebanking.com",
-    aud: "api.tilisy.com",
+    aud: "api.enablebanking.com",
     iat: timestamp,
     exp: timestamp + exp,
   })

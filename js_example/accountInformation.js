@@ -7,7 +7,7 @@ const {getJWT, config, input, getCode} = require("./utils")
 
 const main = async function() {
   const JWT = getJWT()
-  const BASE_URL = "https://api.tilisy.com"
+  const BASE_URL = "https://api.enablebanking.com"
   const REDIRECT_URL = config.redirectUrl
   const BANK_NAME = "Nordea"
   const BANK_COUNTRY = "FI"

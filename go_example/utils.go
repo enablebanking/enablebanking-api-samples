@@ -88,7 +88,7 @@ func getJwtBody() (string, error) {
 		Exp int64  `json:"exp"`
 	}{
 		Iss: "enablebanking.com",
-		Aud: "api.tilisy.com",
+		Aud: "api.enablebanking.com",
 		Iat: iat,
 		Exp: iat + 3600,
 	})

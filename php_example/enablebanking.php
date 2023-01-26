@@ -35,7 +35,7 @@ $rsa_key = file_get_contents(dirname(__FILE__) . '/../' . $key_path);
 $jwt_header = [ 'typ' => 'JWT', 'alg' => 'RS256', 'kid' => $config->applicationId ];
 $payload = [
     'iss' => 'enablebanking.com',
-    'aud' => 'api.tilisy.com',
+    'aud' => 'api.enablebanking.com',
     'iat' => time(),
     'exp' => time() + 3600
 ];
@@ -47,7 +47,7 @@ $headers = [
 ];
 
 // Requesting application details
-$r = request('https://api.tilisy.com/application', $headers);
+$r = request('https://api.enablebanking.com/application', $headers);
 if($r['status'] === 200)
 {
     $app = json_decode($r['body']);
@@ -58,7 +58,7 @@ if($r['status'] === 200)
 }
 
 // Requesting available ASPSPs
-$r = request('https://api.tilisy.com/aspsps', $headers);
+$r = request('https://api.enablebanking.com/aspsps', $headers);
 if($r['status'] === 200)
 {
     $aspsps = json_decode($r['body']);
@@ -78,7 +78,7 @@ $body = [
     'psu_type' => 'personal'
 ];
 
-$r = request('https://api.tilisy.com/auth', $headers, json_encode($body));
+$r = request('https://api.enablebanking.com/auth', $headers, json_encode($body));
 if($r['status'] == 200)
 {
     $auth_url = json_decode($r['body'])->url;
@@ -91,7 +91,7 @@ if($r['status'] == 200)
 $auth_code = readline('Enter value of code parameter from the URL you were redirected to: ');
 
 $body = json_encode([ 'code' => $auth_code ]);
-$r = request('https://api.tilisy.com/sessions', $headers, $body);
+$r = request('https://api.enablebanking.com/sessions', $headers, $body);
 if($r['status'] === 200)
 {
     $session = json_decode($r['body']);
@@ -103,7 +103,7 @@ if($r['status'] === 200)
 $account_uid = $session->accounts[0]->uid;
 
 // Retrieving account balances
-$r = request('https://api.tilisy.com/accounts/' . $account_uid . '/balances', $headers);
+$r = request('https://api.enablebanking.com/accounts/' . $account_uid . '/balances', $headers);
 if($r['status'] === 200)
 {
     $balances = json_decode($r['body'])->balances;
@@ -122,7 +122,7 @@ do
     {
         $params .= '&continuation_key=' . $continuation_key;
     }
-    $r = request('https://api.tilisy.com/accounts/' . $account_uid . '/transactions' . $params, $headers);
+    $r = request('https://api.enablebanking.com/accounts/' . $account_uid . '/transactions' . $params, $headers);
     if($r['status'] === 200)
     {
         $rest_data = json_decode($r['body']);

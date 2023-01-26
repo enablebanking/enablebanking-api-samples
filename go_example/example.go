@@ -12,7 +12,7 @@ import (
 )
 
 const configPath = "../config.json"
-const APIOrigin = "https://api.tilisy.com"
+const APIOrigin = "https://api.enablebanking.com"
 const ASPSPName = "Nordea"
 const ASPSPCountry = "FI"
 
