@@ -1,6 +1,5 @@
 'use strict';
 
-const { create } = require('domain');
 const fetch = require('node-fetch');
 const {getJWT, config, input, getCode} = require("./utils")
 
