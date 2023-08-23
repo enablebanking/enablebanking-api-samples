@@ -5,9 +5,10 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/google/uuid"
-	"io/ioutil"
+	"io"
 	"net/http"
 	"net/url"
+	"os"
 	"time"
 )
 
@@ -18,7 +19,7 @@ const ASPSPCountry = "FI"
 
 func main() {
 	config := Config{}
-	configFile, err := ioutil.ReadFile(configPath)
+	configFile, err := os.ReadFile(configPath)
 	err = json.Unmarshal(configFile, &config)
 	if err != nil {
 		panic(err)
@@ -39,7 +40,7 @@ func main() {
 		panic(err)
 	}
 	defer response.Body.Close()
-	body, err := ioutil.ReadAll(response.Body)
+	body, err := io.ReadAll(response.Body)
 	if err != nil {
 		panic(err)
 	}
@@ -56,7 +57,7 @@ func main() {
 		panic(err)
 	}
 	defer response.Body.Close()
-	body, err = ioutil.ReadAll(response.Body)
+	body, err = io.ReadAll(response.Body)
 	if err != nil {
 		panic(err)
 	}
@@ -93,7 +94,7 @@ func main() {
 		panic(err)
 	}
 	defer response.Body.Close()
-	body, err = ioutil.ReadAll(response.Body)
+	body, err = io.ReadAll(response.Body)
 	if err != nil {
 		panic(err)
 	}
@@ -133,7 +134,7 @@ func main() {
 		panic(err)
 	}
 	defer response.Body.Close()
-	body, err = ioutil.ReadAll(response.Body)
+	body, err = io.ReadAll(response.Body)
 	if err != nil {
 		panic(err)
 	}
@@ -154,7 +155,7 @@ func main() {
 		panic(err)
 	}
 	defer response.Body.Close()
-	body, err = ioutil.ReadAll(response.Body)
+	body, err = io.ReadAll(response.Body)
 	if err != nil {
 		panic(err)
 	}
@@ -173,7 +174,7 @@ func main() {
 		panic(err)
 	}
 	defer response.Body.Close()
-	body, err = ioutil.ReadAll(response.Body)
+	body, err = io.ReadAll(response.Body)
 	if err != nil {
 		panic(err)
 	}
