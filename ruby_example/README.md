@@ -10,5 +10,5 @@ bundle install --path vendor/bundle
 ## Running the sample
 
 ```bash
-ruby lib/main.rb
+ruby lib/account_information.rb
 ```
