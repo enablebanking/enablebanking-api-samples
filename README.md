@@ -1,16 +1,23 @@
-# Enable Banking API samples
+# Enable Banking API Code Samples
 
-Code samples for using https://api.enablebanking.com/
+This repository contains code samples for utilizing the [Enable Banking API](https://api.enablebanking.com/).
 
 ## Prerequisites   
 
-In order to be able to use these samples you need to:
+To successfully use these samples, please follow these steps:
 
-1. Create a developer account at https://enablebanking.com/ by pressing "Get started"
+1. Create a developer account at https://enablebanking.com/ by pressing "Get started".
 
-2. Register your application at https://enablebanking.com/cp/applications
+2. Register a new application at https://enablebanking.com/cp/applications.
+   If you opt to generate the private key for the application in the browser, the application's
+   private key file will be downloaded to your computer. It will be named with the ID assigned to
+   the application and have a ".pem" extension (e.g., `aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee.pem`).
 
-3. Modify `keyPath` and `applicationId` variables in the `config.json` file in the root of this
-project with the values obtained from previous step.
+4. Modify values of the `keyPath` and `applicationId` fields in the `config.json` file with the
+   values obtained in previous step.
+   *This step in not necessary if you are going to use our Postman collection.* 
 
-For further information please refer to the [API documentation](https://enablebanking.com/docs/api/reference/)  
+5. Navigate to a folder with code samples in a language of your choice and follow the instructions
+   provided in the README.md file, which can be found there.
+
+For further information please refer to the [Enable Banking Docs](https://enablebanking.com/docs/)
