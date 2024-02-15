@@ -11,7 +11,8 @@ const main = async function() {
   const BANK_NAME = "Nordea"
   const BANK_COUNTRY = "FI"
   const baseHeaders = {
-    Authorization: `Bearer ${JWT}`
+    Authorization: `Bearer ${JWT}`,
+    "Content-Type": "application/json"
   }
   const applicationResponse = await fetch(`${BASE_URL}/application`, {
     headers: baseHeaders
