@@ -8,7 +8,6 @@ using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
 using System.Text.Json;
-using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using System.Web;
 
@@ -27,15 +26,8 @@ namespace cs_example
 
         static string CreateToken(string keyPath, string appKid)
         {
-            var privateKey = File.ReadAllText(keyPath);
-            var privateKeyLines = privateKey.Split(new[] { Environment.NewLine }, StringSplitOptions.None);
-            var privateKeyEncoded = "";
-            for (int i = 1; i < privateKeyLines.Length - 2; i++) {
-                privateKeyEncoded += privateKeyLines[i];
-            }
-            var privateKeyBytes = Convert.FromBase64String(privateKeyEncoded);
             using RSA rsa = RSA.Create();
-            rsa.ImportRSAPrivateKey(privateKeyBytes, out _);
+            rsa.ImportFromPem(File.ReadAllText(keyPath));
 
             var signingCredentials = new SigningCredentials(new RsaSecurityKey(rsa), SecurityAlgorithms.RsaSha256)
             {
