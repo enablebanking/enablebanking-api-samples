@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "d171e5b7-9fa6-4ce8-9bb5-660b00056740",
+		"_postman_id": "5742d7f1-93de-4bc7-83d9-56ff231531d0",
 		"name": "Enable Banking",
 		"description": "This is collection of sample requests to api.enablebanking.com.\nEach request needs JWT token, which generates in Pre-request Script. For using this, add your RSA private key (variable name - 'private_key') and kid (variable name - 'kid') to collection Variables.\nGo to https://enablebanking.com/cp/applications and register your application.",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
@@ -284,8 +284,8 @@
 							]
 						}
 					},
-					"_postman_previewlanguage": null,
-					"header": null,
+					"_postman_previewlanguage": "Text",
+					"header": [],
 					"cookie": [],
 					"body": "{\n    \"payment_id\": \"075d85d2-1683-4b77-9582-1a99f1708146\",\n    \"status\": \"RCVD\",\n    \"url\": \"https://tilisy-sandbox.enablebanking.com/pis/start?payment_id=075d85d2-1683-4b77-9582-1a99f1708146\"\n}"
 				},
@@ -322,8 +322,8 @@
 							]
 						}
 					},
-					"_postman_previewlanguage": null,
-					"header": null,
+					"_postman_previewlanguage": "Text",
+					"header": [],
 					"cookie": [],
 					"body": "{\n    \"payment_id\": \"16e568c4-a5b4-406e-a024-7c90515031ee\",\n    \"status\": \"RCVD\",\n    \"url\": \"https://tilisy-sandbox.enablebanking.com/pis/start?payment_id=16e568c4-a5b4-406e-a024-7c90515031ee\"\n}"
 				}
@@ -380,8 +380,8 @@
 							]
 						}
 					},
-					"_postman_previewlanguage": null,
-					"header": null,
+					"_postman_previewlanguage": "Text",
+					"header": [],
 					"cookie": [],
 					"body": "{\n    \"payment_id\": \"075d85d2-1683-4b77-9582-1a99f1708146\",\n    \"status\": \"ACCC\",\n    \"payment_details\": {\n        \"debtor\": {\n            \"name\": \"SANDBOX-INDIVIDUAL-SE-1\"\n        },\n        \"debtor_account\": {\n            \"identification\": \"SE3460000000000923450017\",\n            \"scheme_name\": \"IBAN\"\n        },\n        \"debtor_currency\": \"SEK\",\n        \"credit_transfer_transaction\": [\n            {\n                \"instructed_amount\": {\n                    \"currency\": \"SEK\",\n                    \"amount\": \"1.00\"\n                },\n                \"beneficiary\": {\n                    \"creditor_agent\": {\n                        \"clearing_system_member_id\": {\n                            \"member_id\": \"1371\"\n                        }\n                    },\n                    \"creditor\": {\n                        \"name\": \"Tester\"\n                    },\n                    \"creditor_account\": {\n                        \"identification\": \"0139562\",\n                        \"scheme_name\": \"BBAN\"\n                    }\n                },\n                \"remittance_information\": [\n                    \"testing\"\n                ]\n            }\n        ]\n    },\n    \"final_status\": true\n}"
 				},
@@ -410,8 +410,8 @@
 							]
 						}
 					},
-					"_postman_previewlanguage": null,
-					"header": null,
+					"_postman_previewlanguage": "Text",
+					"header": [],
 					"cookie": [],
 					"body": "{\n    \"payment_id\": \"16e568c4-a5b4-406e-a024-7c90515031ee\",\n    \"status\": \"ACTC\",\n    \"payment_details\": {\n        \"payment_type_information\": {\n            \"instruction_priority\": \"NORM\",\n            \"service_level\": \"SEPA\"\n        },\n        \"debtor\": {\n            \"name\": \"John Snow\"\n        },\n        \"debtor_account\": {\n            \"identification\": \"SE4880000123459876543219\",\n            \"scheme_name\": \"IBAN\"\n        },\n        \"debtor_currency\": \"SEK\",\n        \"charge_bearer\": \"SHAR\",\n        \"credit_transfer_transaction\": [\n            {\n                \"instructed_amount\": {\n                    \"currency\": \"EUR\",\n                    \"amount\": \"1.00\"\n                },\n                \"beneficiary\": {\n                    \"creditor\": {\n                        \"name\": \"Tester\",\n                        \"postal_address\": {\n                            \"department\": \"\",\n                            \"sub_department\": \"\",\n                            \"street_name\": \"\",\n                            \"building_number\": \"\",\n                            \"post_code\": \"\",\n                            \"town_name\": \"\",\n                            \"country_sub_division\": \"\",\n                            \"country\": \"SE\",\n                            \"address_line\": [\n                                \"\"\n                            ]\n                        }\n                    },\n                    \"creditor_account\": {\n                        \"identification\": \"FI2112345600000785\",\n                        \"scheme_name\": \"IBAN\"\n                    }\n                },\n                \"remittance_information\": [\n                    \"testing\"\n                ]\n            }\n        ]\n    },\n    \"final_status\": false\n}"
 				}
@@ -506,10 +506,6 @@
 			"key": "kid",
 			"value": "",
 			"type": "default"
-		},
-		{
-			"key": "jwt_signed",
-			"value": ""
 		}
 	]
 }
