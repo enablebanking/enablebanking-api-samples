@@ -1,7 +1,7 @@
 {
 	"info": {
 		"_postman_id": "d171e5b7-9fa6-4ce8-9bb5-660b00056740",
-		"name": "Enable Banking New",
+		"name": "Enable Banking",
 		"description": "This is collection of sample requests to api.enablebanking.com.\nEach request needs JWT token, which generates in Pre-request Script. For using this, add your RSA private key (variable name - 'private_key') and kid (variable name - 'kid') to collection Variables.\nGo to https://enablebanking.com/cp/applications and register your application.",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "26123640"
