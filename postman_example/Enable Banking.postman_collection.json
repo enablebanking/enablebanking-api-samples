@@ -1,9 +1,10 @@
 {
 	"info": {
-		"_postman_id": "d8fb687d-7b9f-4155-a58e-a6b1c7197f8a",
-		"name": "Enable Banking",
+		"_postman_id": "d171e5b7-9fa6-4ce8-9bb5-660b00056740",
+		"name": "Enable Banking New",
 		"description": "This is collection of sample requests to api.enablebanking.com.\nEach request needs JWT token, which generates in Pre-request Script. For using this, add your RSA private key (variable name - 'private_key') and kid (variable name - 'kid') to collection Variables.\nGo to https://enablebanking.com/cp/applications and register your application.",
-		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "26123640"
 	},
 	"item": [
 		{
@@ -210,6 +211,211 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "Starting payment",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{jwt_signed}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"aspsp\": {\n        \"name\": \"Nordea\",\n        \"country\": \"FI\"\n    },\n    \"state\": \"b463a960-9616-4df6-909f-f80884190c22\",\n    \"redirect_url\": \"https://google.com/\",\n    \"psu_type\": \"personal\",\n    \"payment_type\": \"SEPA\",\n    \"payment_request\": {\n        \"credit_transfer_transaction\": [\n            {\n                \"instructed_amount\": {\n                    \"amount\": \"1.00\",\n                    \"currency\": \"EUR\"\n                },\n                \"beneficiary\": {\n                    \"creditor\": {\n                        \"name\": \"Tester\"\n                    },\n                    \"creditor_account\": {\n                        \"scheme_name\": \"IBAN\",\n                        \"identification\": \"FI2112345600000785\"\n                    }\n                },\n                \"remittance_information\": [\n                    \"testing\"\n                ]\n            }\n        ]\n    }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://api.enablebanking.com/payments",
+					"protocol": "https",
+					"host": [
+						"api",
+						"enablebanking",
+						"com"
+					],
+					"path": [
+						"payments"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "HandelsBanken (sandbox)",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{jwt_signed}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"aspsp\": {\n        \"name\": \"Handelsbanken\",\n        \"country\": \"SE\"\n    },\n    \"state\": \"b463a960-9616-4df6-909f-f80884190c22\",\n    \"redirect_url\": \"https://baidu.com/\",\n    \"psu_type\": \"personal\",\n    \"auth_method\": \"BANKID\",\n    \"payment_type\": \"DOMESTIC\",\n    \"payment_request\": {\n        // \"debtor_account\": {\n        //     \"scheme_name\": \"BBAN\",\n        //     \"identification\": \"889881138\"\n        // },\n        \"credit_transfer_transaction\": [\n            {\n                \"instructed_amount\": {\n                    \"amount\": \"1.00\",\n                    \"currency\": \"SEK\"\n                },\n                \"beneficiary\": {\n                    \"creditor\": {\n                        \"name\": \"Tester\"\n                    },\n                    \"creditor_account\": {\n                        \"scheme_name\": \"BBAN\",\n                        \"identification\": \"0139562\"\n                    },\n                    \"creditor_agent\": {\n                        \"clearing_system_member_id\": {\n                            \"member_id\": \"1371\"\n                        }\n                    }\n                },\n                \"remittance_information\": [\n                    \"testing\"\n                ]\n            }\n        ]\n    }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://api.enablebanking.com/payments",
+							"protocol": "https",
+							"host": [
+								"api",
+								"enablebanking",
+								"com"
+							],
+							"path": [
+								"payments"
+							]
+						}
+					},
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": "{\n    \"payment_id\": \"075d85d2-1683-4b77-9582-1a99f1708146\",\n    \"status\": \"RCVD\",\n    \"url\": \"https://tilisy-sandbox.enablebanking.com/pis/start?payment_id=075d85d2-1683-4b77-9582-1a99f1708146\"\n}"
+				},
+				{
+					"name": "SwedBank (sandbox)",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{jwt_signed}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"aspsp\": {\n        \"name\": \"Bergslagens Sparbank\",\n        \"country\": \"SE\"\n    },\n    \"state\": \"b463a960-9616-4df6-909f-f80884190c22\",\n    \"redirect_url\": \"https://baidu.com/\",\n    \"psu_type\": \"personal\",\n    \"payment_type\": \"SEPA\",\n    \"payment_request\": {\n        \"charge_bearer\": \"SHAR\",\n        \"payment_type_information\": {\n            \"service_level\": \"SEPA\",\n            \"instruction_priority\": \"NORM\"\n        },\n        // \"debtor_account\": {\n        //     \"scheme_name\": \"IBAN\",\n        //     \"identification\": \"SE4880000123459876543219\"\n        // },\n        \"credit_transfer_transaction\": [\n            {\n                \"payment_ud\": {\n                    \"end_to_end_id\": \"98770382-a6b9-48b5-ba67-07365fb39161\"\n                },\n                \"instructed_amount\": {\n                    \"currency\": \"EUR\",\n                    \"amount\": \"1.00\"\n                },\n                \"beneficiary\": {\n                    \"creditor\": {\n                        \"name\": \"Tester\",\n                        \"postal_address\": {\n                            \"country\": \"SE\",\n                            \"department\": \"\",\n                            \"sub_department\": \"\",\n                            \"street_name\": \"\",\n                            \"building_number\": \"\",\n                            \"post_code\": \"\",\n                            \"town_name\": \"\",\n                            \"country_sub_division\": \"\",\n                            \"address_line\": [\n                                \"\"\n                            ]\n                        }\n                    },\n                    \"creditor_account\": {\n                        \"scheme_name\": \"IBAN\",\n                        \"identification\": \"FI2112345600000785\"\n                    }\n                },\n                \"remittance_information\": [\n                    \"testing\"\n                ]\n            }\n        ]\n    }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://api.enablebanking.com/payments",
+							"protocol": "https",
+							"host": [
+								"api",
+								"enablebanking",
+								"com"
+							],
+							"path": [
+								"payments"
+							]
+						}
+					},
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": "{\n    \"payment_id\": \"16e568c4-a5b4-406e-a024-7c90515031ee\",\n    \"status\": \"RCVD\",\n    \"url\": \"https://tilisy-sandbox.enablebanking.com/pis/start?payment_id=16e568c4-a5b4-406e-a024-7c90515031ee\"\n}"
+				}
+			]
+		},
+		{
+			"name": "Fetching payment",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{jwt_signed}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://api.enablebanking.com/payments/075d85d2-1683-4b77-9582-1a99f1708146",
+					"protocol": "https",
+					"host": [
+						"api",
+						"enablebanking",
+						"com"
+					],
+					"path": [
+						"payments",
+						"075d85d2-1683-4b77-9582-1a99f1708146"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "HandelsBanken (sandbox)",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{jwt_signed}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://api.enablebanking.com/payments/075d85d2-1683-4b77-9582-1a99f1708146",
+							"protocol": "https",
+							"host": [
+								"api",
+								"enablebanking",
+								"com"
+							],
+							"path": [
+								"payments",
+								"075d85d2-1683-4b77-9582-1a99f1708146"
+							]
+						}
+					},
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": "{\n    \"payment_id\": \"075d85d2-1683-4b77-9582-1a99f1708146\",\n    \"status\": \"ACCC\",\n    \"payment_details\": {\n        \"debtor\": {\n            \"name\": \"SANDBOX-INDIVIDUAL-SE-1\"\n        },\n        \"debtor_account\": {\n            \"identification\": \"SE3460000000000923450017\",\n            \"scheme_name\": \"IBAN\"\n        },\n        \"debtor_currency\": \"SEK\",\n        \"credit_transfer_transaction\": [\n            {\n                \"instructed_amount\": {\n                    \"currency\": \"SEK\",\n                    \"amount\": \"1.00\"\n                },\n                \"beneficiary\": {\n                    \"creditor_agent\": {\n                        \"clearing_system_member_id\": {\n                            \"member_id\": \"1371\"\n                        }\n                    },\n                    \"creditor\": {\n                        \"name\": \"Tester\"\n                    },\n                    \"creditor_account\": {\n                        \"identification\": \"0139562\",\n                        \"scheme_name\": \"BBAN\"\n                    }\n                },\n                \"remittance_information\": [\n                    \"testing\"\n                ]\n            }\n        ]\n    },\n    \"final_status\": true\n}"
+				},
+				{
+					"name": "SwedBank (sandbox)",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{jwt_signed}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://api.enablebanking.com/payments/16e568c4-a5b4-406e-a024-7c90515031ee",
+							"protocol": "https",
+							"host": [
+								"api",
+								"enablebanking",
+								"com"
+							],
+							"path": [
+								"payments",
+								"16e568c4-a5b4-406e-a024-7c90515031ee"
+							]
+						}
+					},
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": "{\n    \"payment_id\": \"16e568c4-a5b4-406e-a024-7c90515031ee\",\n    \"status\": \"ACTC\",\n    \"payment_details\": {\n        \"payment_type_information\": {\n            \"instruction_priority\": \"NORM\",\n            \"service_level\": \"SEPA\"\n        },\n        \"debtor\": {\n            \"name\": \"John Snow\"\n        },\n        \"debtor_account\": {\n            \"identification\": \"SE4880000123459876543219\",\n            \"scheme_name\": \"IBAN\"\n        },\n        \"debtor_currency\": \"SEK\",\n        \"charge_bearer\": \"SHAR\",\n        \"credit_transfer_transaction\": [\n            {\n                \"instructed_amount\": {\n                    \"currency\": \"EUR\",\n                    \"amount\": \"1.00\"\n                },\n                \"beneficiary\": {\n                    \"creditor\": {\n                        \"name\": \"Tester\",\n                        \"postal_address\": {\n                            \"department\": \"\",\n                            \"sub_department\": \"\",\n                            \"street_name\": \"\",\n                            \"building_number\": \"\",\n                            \"post_code\": \"\",\n                            \"town_name\": \"\",\n                            \"country_sub_division\": \"\",\n                            \"country\": \"SE\",\n                            \"address_line\": [\n                                \"\"\n                            ]\n                        }\n                    },\n                    \"creditor_account\": {\n                        \"identification\": \"FI2112345600000785\",\n                        \"scheme_name\": \"IBAN\"\n                    }\n                },\n                \"remittance_information\": [\n                    \"testing\"\n                ]\n            }\n        ]\n    },\n    \"final_status\": false\n}"
+				}
+			]
 		}
 	],
 	"event": [
