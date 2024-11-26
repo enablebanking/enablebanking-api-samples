@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "31e7c32a-64a1-430a-a1c1-a2a90b9d49d3",
+		"_postman_id": "2af8f8c3-82b7-40df-bd86-64cf2bb2693e",
 		"name": "Enable Banking",
 		"description": "This is collection of sample requests to api.enablebanking.com.\nEach request needs JWT token, which generates in Pre-request Script. For using this, add your RSA private key (variable name - 'private_key') and kid (variable name - 'kid') to collection Variables.\nGo to https://enablebanking.com/cp/applications and register your application.",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
@@ -247,7 +247,7 @@
 			},
 			"response": [
 				{
-					"name": "HandelsBanken (sandbox)",
+					"name": "SE Handelsbanken DOMESTIC personal",
 					"originalRequest": {
 						"method": "POST",
 						"header": [
@@ -290,7 +290,7 @@
 					"body": "{\n    \"payment_id\": \"075d85d2-1683-4b77-9582-1a99f1708146\",\n    \"status\": \"RCVD\",\n    \"url\": \"https://tilisy-sandbox.enablebanking.com/pis/start?payment_id=075d85d2-1683-4b77-9582-1a99f1708146\"\n}"
 				},
 				{
-					"name": "SwedBank (sandbox)",
+					"name": "SE SwedBank SEPA personal",
 					"originalRequest": {
 						"method": "POST",
 						"header": [
@@ -341,7 +341,7 @@
 					}
 				],
 				"url": {
-					"raw": "https://api.enablebanking.com/payments/075d85d2-1683-4b77-9582-1a99f1708146",
+					"raw": "https://api.enablebanking.com/payments/:paymentId",
 					"protocol": "https",
 					"host": [
 						"api",
@@ -350,13 +350,19 @@
 					],
 					"path": [
 						"payments",
-						"075d85d2-1683-4b77-9582-1a99f1708146"
+						":paymentId"
+					],
+					"variable": [
+						{
+							"key": "paymentId",
+							"value": ""
+						}
 					]
 				}
 			},
 			"response": [
 				{
-					"name": "HandelsBanken (sandbox)",
+					"name": "SE Handelsbanken DOMESTIC personal",
 					"originalRequest": {
 						"method": "GET",
 						"header": [
@@ -386,7 +392,7 @@
 					"body": "{\n    \"payment_id\": \"075d85d2-1683-4b77-9582-1a99f1708146\",\n    \"status\": \"ACCC\",\n    \"payment_details\": {\n        \"debtor\": {\n            \"name\": \"SANDBOX-INDIVIDUAL-SE-1\"\n        },\n        \"debtor_account\": {\n            \"identification\": \"SE3460000000000923450017\",\n            \"scheme_name\": \"IBAN\"\n        },\n        \"debtor_currency\": \"SEK\",\n        \"credit_transfer_transaction\": [\n            {\n                \"instructed_amount\": {\n                    \"currency\": \"SEK\",\n                    \"amount\": \"1.00\"\n                },\n                \"beneficiary\": {\n                    \"creditor_agent\": {\n                        \"clearing_system_member_id\": {\n                            \"member_id\": \"1371\"\n                        }\n                    },\n                    \"creditor\": {\n                        \"name\": \"Tester\"\n                    },\n                    \"creditor_account\": {\n                        \"identification\": \"0139562\",\n                        \"scheme_name\": \"BBAN\"\n                    }\n                },\n                \"remittance_information\": [\n                    \"testing\"\n                ]\n            }\n        ]\n    },\n    \"final_status\": true\n}"
 				},
 				{
-					"name": "SwedBank (sandbox)",
+					"name": "SE SwedBank SEPA personal",
 					"originalRequest": {
 						"method": "GET",
 						"header": [
