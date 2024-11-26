@@ -1,10 +1,10 @@
 {
 	"info": {
-		"_postman_id": "2af8f8c3-82b7-40df-bd86-64cf2bb2693e",
+		"_postman_id": "06ac5292-89fe-4d5d-937a-3968e767a3ec",
 		"name": "Enable Banking",
 		"description": "This is collection of sample requests to api.enablebanking.com.\nEach request needs JWT token, which generates in Pre-request Script. For using this, add your RSA private key (variable name - 'private_key') and kid (variable name - 'kid') to collection Variables.\nGo to https://enablebanking.com/cp/applications and register your application.",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "26123640"
+		"_exporter_id": "7166420"
 	},
 	"item": [
 		{
@@ -72,7 +72,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"access\": {\n        \"valid_until\": \"2022-10-10T16:02:08.070557+00:00\"\n    },\n    \"aspsp\": {\n        \"name\": \"Nordea\",\n        \"country\": \"FI\"\n    },\n    \"state\": \"7226b0c8-e5bf-463c-acdc-a562e18224d1\",\n    \"redirect_url\": \"https://www.google.com/\",\n    \"psu_type\": \"personal\"\n}",
+					"raw": "{\n    \"access\": {\n        \"valid_until\": \"2025-04-10T16:02:08.070557+00:00\"\n    },\n    \"aspsp\": {\n        \"name\": \"Nordea\",\n        \"country\": \"FI\"\n    },\n    \"state\": \"7226b0c8-e5bf-463c-acdc-a562e18224d1\",\n    \"redirect_url\": \"http://localhost:8080/auth_callback\",\n    \"psu_type\": \"personal\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -185,7 +185,7 @@
 			"response": []
 		},
 		{
-			"name": "Retrieving account transactions (since 90 days ago)",
+			"name": "Retrieving account transactions (longest period)",
 			"request": {
 				"method": "GET",
 				"header": [
@@ -264,7 +264,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"aspsp\": {\n        \"name\": \"Handelsbanken\",\n        \"country\": \"SE\"\n    },\n    \"state\": \"b463a960-9616-4df6-909f-f80884190c22\",\n    \"redirect_url\": \"https://google.com/\",\n    \"psu_type\": \"personal\",\n    \"auth_method\": \"BANKID\",\n    \"payment_type\": \"DOMESTIC\",\n    \"payment_request\": {\n        // \"debtor_account\": {\n        //     \"scheme_name\": \"BBAN\",\n        //     \"identification\": \"889881138\"\n        // },\n        \"credit_transfer_transaction\": [\n            {\n                \"instructed_amount\": {\n                    \"amount\": \"1.00\",\n                    \"currency\": \"SEK\"\n                },\n                \"beneficiary\": {\n                    \"creditor\": {\n                        \"name\": \"Tester\"\n                    },\n                    \"creditor_account\": {\n                        \"scheme_name\": \"BBAN\",\n                        \"identification\": \"0139562\"\n                    },\n                    \"creditor_agent\": {\n                        \"clearing_system_member_id\": {\n                            \"member_id\": \"1371\"\n                        }\n                    }\n                },\n                \"remittance_information\": [\n                    \"testing\"\n                ]\n            }\n        ]\n    }\n}",
+							"raw": "{\n    \"aspsp\": {\n        \"name\": \"Handelsbanken\",\n        \"country\": \"SE\"\n    },\n    \"state\": \"b463a960-9616-4df6-909f-f80884190c22\",\n    \"redirect_url\": \"http://localhost:8080/auth_callback\",\n    \"psu_type\": \"personal\",\n    \"auth_method\": \"BANKID\",\n    \"payment_type\": \"DOMESTIC\",\n    \"payment_request\": {\n        // \"debtor_account\": {\n        //     \"scheme_name\": \"BBAN\",\n        //     \"identification\": \"889881138\"\n        // },\n        \"credit_transfer_transaction\": [\n            {\n                \"instructed_amount\": {\n                    \"amount\": \"1.00\",\n                    \"currency\": \"SEK\"\n                },\n                \"beneficiary\": {\n                    \"creditor\": {\n                        \"name\": \"Tester\"\n                    },\n                    \"creditor_account\": {\n                        \"scheme_name\": \"BBAN\",\n                        \"identification\": \"0139562\"\n                    },\n                    \"creditor_agent\": {\n                        \"clearing_system_member_id\": {\n                            \"member_id\": \"1371\"\n                        }\n                    }\n                },\n                \"remittance_information\": [\n                    \"testing\"\n                ]\n            }\n        ]\n    }\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -302,7 +302,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"aspsp\": {\n        \"name\": \"Swedbank\",\n        \"country\": \"SE\"\n    },\n    \"state\": \"b463a960-9616-4df6-909f-f80884190c22\",\n    \"redirect_url\": \"https://google.com/\",\n    \"psu_type\": \"personal\",\n    \"payment_type\": \"SEPA\",\n    \"payment_request\": {\n        \"charge_bearer\": \"SHAR\",\n        \"payment_type_information\": {\n            \"service_level\": \"SEPA\",\n            \"instruction_priority\": \"NORM\"\n        },\n        // \"debtor_account\": {\n        //     \"scheme_name\": \"IBAN\",\n        //     \"identification\": \"SE4880000123459876543219\"\n        // },\n        \"credit_transfer_transaction\": [\n            {\n                \"instructed_amount\": {\n                    \"currency\": \"EUR\",\n                    \"amount\": \"1.00\"\n                },\n                \"beneficiary\": {\n                    \"creditor\": {\n                        \"name\": \"Tester\",\n                        \"postal_address\": {\n                            \"country\": \"FI\",\n                            \"department\": \"\",\n                            \"sub_department\": \"\",\n                            \"street_name\": \"\",\n                            \"building_number\": \"\",\n                            \"post_code\": \"\",\n                            \"town_name\": \"\",\n                            \"country_sub_division\": \"\",\n                            \"address_line\": [\n                                \"\"\n                            ]\n                        }\n                    },\n                    \"creditor_account\": {\n                        \"scheme_name\": \"IBAN\",\n                        \"identification\": \"FI2112345600000785\"\n                    }\n                },\n                \"remittance_information\": [\n                    \"testing\"\n                ]\n            }\n        ]\n    }\n}",
+							"raw": "{\n    \"aspsp\": {\n        \"name\": \"Swedbank\",\n        \"country\": \"SE\"\n    },\n    \"state\": \"b463a960-9616-4df6-909f-f80884190c22\",\n    \"redirect_url\": \"http://localhost:8080/auth_callback\",\n    \"psu_type\": \"personal\",\n    \"payment_type\": \"SEPA\",\n    \"payment_request\": {\n        \"charge_bearer\": \"SHAR\",\n        \"payment_type_information\": {\n            \"service_level\": \"SEPA\",\n            \"instruction_priority\": \"NORM\"\n        },\n        // \"debtor_account\": {\n        //     \"scheme_name\": \"IBAN\",\n        //     \"identification\": \"SE4880000123459876543219\"\n        // },\n        \"credit_transfer_transaction\": [\n            {\n                \"instructed_amount\": {\n                    \"currency\": \"EUR\",\n                    \"amount\": \"1.00\"\n                },\n                \"beneficiary\": {\n                    \"creditor\": {\n                        \"name\": \"Tester\",\n                        \"postal_address\": {\n                            \"country\": \"FI\",\n                            \"department\": \"\",\n                            \"sub_department\": \"\",\n                            \"street_name\": \"\",\n                            \"building_number\": \"\",\n                            \"post_code\": \"\",\n                            \"town_name\": \"\",\n                            \"country_sub_division\": \"\",\n                            \"address_line\": [\n                                \"\"\n                            ]\n                        }\n                    },\n                    \"creditor_account\": {\n                        \"scheme_name\": \"IBAN\",\n                        \"identification\": \"FI2112345600000785\"\n                    }\n                },\n                \"remittance_information\": [\n                    \"testing\"\n                ]\n            }\n        ]\n    }\n}",
 							"options": {
 								"raw": {
 									"language": "json"
