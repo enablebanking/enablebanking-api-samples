@@ -1,5 +1,7 @@
 {
     "require": {
-        "firebase/php-jwt": "^5.2"
+        "firebase/php-jwt": "^6.11",
+      "ext-curl": "*",
+      "ext-readline": "*"
     }
 }
